@@ -1,3 +1,6 @@
+//k6 run .\k6_ukol.js
+
+
 import { sleep, check } from "k6";
 import http from "k6/http";
 
