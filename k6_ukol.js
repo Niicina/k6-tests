@@ -8,7 +8,7 @@ import { Trend, Rate } from "k6/metrics";
 //Všechny hodnoty v testu (konfigurace) musí být parametrizovatelný.
 const config = {
   vus: 2, //Maximální zátěž je 2 VU
-  duration: "30s", //TestCase poběží 5minut.
+  duration: "5m", //TestCase poběží 5minut.
 
   baseUrl: "https://www.iwant.cz/",
 
