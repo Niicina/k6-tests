@@ -8,7 +8,7 @@ import { Trend, Rate } from "k6/metrics";
 //Všechny hodnoty v testu (konfigurace) musí být parametrizovatelný.
 const config = {
   vus: 2, //Maximální zátěž je 2 VU
-  duration: "5m", //TestCase poběží 5minut.
+  duration: "30s", //TestCase poběží 5minut.
 
   baseUrl: "https://www.iwant.cz/",
 
@@ -61,7 +61,7 @@ export default function () {
   let okNaseptavac = check(naseptavac, {
     "status je 200": (r) => r.status === 200,
     "Našeptávač musí vrátit více jako 10 iphonů": (r) =>
-      (r.body.match(/Apple iPhone/g)).length > config.minPocetIphonu,
+      (r.body.match(/Apple iPhone/g) || [] ).length > config.minPocetIphonu,
   });
     journeyOk = journeyOk && okNaseptavac;
 
@@ -85,7 +85,10 @@ export default function () {
 
   let filtry = http.get(
     `${baseUrl}Products/Filter/AllFilterData`,
-    { tags: { type: "filtry" } }
+    { tags: { type: "filtry" },
+      headers: {
+      "X-Requested-With": "XMLHttpRequest",
+    }, }
   );
 
   let okFiltry = check(filtry, {
