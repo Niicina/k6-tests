@@ -29,6 +29,8 @@ const config = {
     index: __ENV.INDEX ? __ENV.INDEX : 'movies',
     host: __ENV.HOST ? __ENV.HOST : 'http://localhost:9200',
   },
+
+  //dodělat parametrizaci
 }
 
 export const options = {
@@ -43,7 +45,6 @@ export const options = {
     exec: 'default',
     },
 
-    //dotaz k tomuhle, musí se to dělat přes scénáře, nebo můžu mít všechny tři skupiny v default funkci a nastavit thresholdy pro všechny tři skupiny?
     reviews : {
       //Ke každému filmu veřejnost přidávat hodnocení, maximálně 100 hodnocení za minutu
       executor: 'constant-arrival-rate',
@@ -64,10 +65,10 @@ export const options = {
       //- Chybovost maximálně 1%
       http_req_failed: ['rate<0.01'],
 
-        'http_req_duration{type:movie}': ['p(95)<200'],
-        'http_req_duration{type:review}': ['p(95)<200'],
+      'http_req_duration{type:movie}': ['p(95)<200'],
+      'http_req_duration{type:review}': ['p(95)<200'],
 
-       'http_req_failed{type:movie}': ['rate<0.01'],
+      'http_req_failed{type:movie}': ['rate<0.01'],
       'http_req_failed{type:review}': ['rate<0.01'],
   },
 };
@@ -84,7 +85,7 @@ export default function () {
   sleep(5)
   existMovies(config, '4')
 
-  //saveMovieRatings(config, reviewsData)
+  saveMovieRatings(config, reviewsData)
 }
 
 export function reviewsScenario() {

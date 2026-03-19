@@ -69,7 +69,7 @@ export const saveMovieRatings = function(config = fail(`missing config.`), revie
         tags: { type: 'review' }
       });
      
-      //-Použijte countery pro počítadlo chyb, test by měl mít threshold na počet úspěšně uložených filmů. 
+      //-Použijte countery pro počítadlo chyb, test by měl mít threshold na počet úspěšně uložených ratings. 
       if (res.status !== 201) {errorCounter.add(1);}
 
       check(res, {
